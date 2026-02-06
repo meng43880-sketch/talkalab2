@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TalkaLab — Контроль и автоматизация отдела продаж</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Уведомление об успешной отправке -->
+    <div class="success-notification" id="successNotification">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="success-text">
+            <h4>Заявка успешно доставлена!</h4>
+            <p>Мы свяжемся с вами в ближайшее время</p>
+        </div>
+        <button class="close-notification" onclick="closeNotification()">×</button>
+    </div>
+
+    <!-- Прогресс-бар скролла -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Кнопка переключения темы -->
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun"></i>
+    </button>
+
+    <!-- Шапка -->
+    <header id="header">
+        <div class="container header-container">
+            <!-- Логотип СЛЕВА -->
+            <a href="#" class="logo">
+                <div class="logo-icon"></div>
+                <div class="logo-text">TalkaLab</div>
+            </a>
+
+            <nav class="nav">
+                <a href="#comparison" class="nav-link">Сравнение</a>
+                <a href="#services" class="nav-link">Решения</a>
+                <a href="#pricing" class="nav-link">Цены</a>
+                <a href="#audience" class="nav-link">Для кого</a>
+                <a href="#cases" class="nav-link">Кейсы</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <!-- Кнопка Telegram канала -->
+                <a href="https://t.me/talka_lab" class="btn btn-telegram-channel" target="_blank">
+                    <i class="fab fa-telegram btn-icon"></i> Канал
+                </a>
+                <!-- Основная кнопка консультации -->
+                <a href="#" class="btn btn-primary" onclick="openConsultationForm()">
+                    <i class="fas fa-comments btn-icon"></i> Получить консультацию
+                </a>
+            </nav>
+
+            <!-- Кнопка гамбургера для мобильного меню -->
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Мобильное меню с добавленным "Главный экран" -->
+    <div class="mobile-menu" id="mobileMenu">
+        <a href="#" class="nav-link">Главный экран</a>
+        <a href="#comparison" class="nav-link">Сравнение</a>
+        <a href="#services" class="nav-link">Решения</a>
+        <a href="#pricing" class="nav-link">Цены</a>
+        <a href="#audience" class="nav-link">Для кого</a>
+        <a href="#cases" class="nav-link">Кейсы</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <!-- Кнопка канала в меню -->
+        <a href="https://t.me/talka_lab" class="btn btn-telegram-channel" target="_blank">
+            <i class="fab fa-telegram btn-icon"></i> Наш канал
+        </a>
+        <!-- Основная кнопка консультации в меню -->
+        <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+            <i class="fas fa-comments btn-icon"></i> Получить консультацию
+        </a>
+    </div>
+
+    <!-- Блок 1: Герой -->
+    <section class="hero">
+        <div class="gradient-transition gradient-down"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge animate-up">
+                        <i class="fas fa-bolt"></i> ИИ для продаж и контроля отдела
+                    </div>
+
+                    <h1 class="animate-up delay-1">
+                        Автоматизируем рутину продаж с помощью <span class="text-gradient">ИИ</span>
+                    </h1>
+
+                    <p class="lead animate-up delay-2">
+                        Помогаем бизнесу не терять лиды на входе, контролировать продажи и увеличивать выручку. Наши решения работают 24/7 — AI-агент общается с клиентами, AI-Антихаос показывает реальную картину продаж.
+                    </p>
+
+                    <!-- Кнопки героя -->
+                    <div class="hero-buttons animate-up delay-3">
+                        <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+                            <i class="fas fa-comments btn-icon"></i> Получить консультацию
+                        </a>
+                        <!-- Новая блеклая кнопка канала -->
+                        <a href="https://t.me/talka_lab" class="btn btn-telegram-channel btn-lg" target="_blank">
+                            <i class="fab fa-telegram-plane btn-icon"></i> Наш канал
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Переписка из фото -->
+                <div class="chat-demo animate-scale delay-2">
+                    <div class="chat-header">
+                        <div class="chat-avatar">TL</div>
+                        <div>
+                            <div class="chat-name">TalkaLab AI Assistant</div>
+                            <div class="chat-status"><i class="fas fa-circle" style="font-size: 0.6rem;"></i> онлайн</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages">
+                        <div class="message message-incoming">
+                            ❗ Привет! Я AI-агент TalkaLab. Готов принимать ваши заявки 24/7, вести диалог и передавать готовых клиентов менеджерам.
+                            <div class="message-time">12:00</div>
+                        </div>
+
+                        <div class="message message-outgoing">
+                            Нужно автоматизировать продажи и видеть реальную картину
+                            <div class="message-time">12:01</div>
+                        </div>
+
+                        <div class="message message-incoming">
+                            Отлично! У нас есть два решения: AI-агент для общения с клиентами и AI-Антихаос для контроля продаж. Подберем оптимальный вариант.
+                            <div class="message-time">12:01</div>
+                        </div>
+
+                        <div class="typing-indicator">
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                            <div class="typing-dot"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка поддержки -->
+                <div class="hero-support-btn animate-up delay-4">
+                    <p style="margin-bottom: 20px; color: var(--text-secondary);">
+                        Если есть какой-то вопрос, пишите сюда:
+                    </p>
+                    <a href="https://t.me/talka_lab_support_bot" class="btn btn-outline" target="_blank">
+                        <i class="fab fa-telegram btn-icon"></i> Техподдержка в Telegram
+                    </a>
+                </div>
+
+                <!-- Статистика -->
+                <div class="hero-stats">
+                    <div class="stat animate-up delay-2">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Общение с клиентами</div>
+                    </div>
+                    <div class="stat animate-up delay-3">
+                        <div class="stat-number">+40%</div>
+                        <div class="stat-label">Рост продаж</div>
+                    </div>
+                    <div class="stat animate-up delay-4">
+                        <div class="stat-number">5-7 дн.</div>
+                        <div class="stat-label">Пилотный проект</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 2: Сравнение -->
+    <section id="comparison" class="comparison">
+        <div class="gradient-transition gradient-up"></div>
+        <div class="container">
+            <div class="animate-up">
+                <h2 class="section-title">Что происходит сейчас и как будет с TalkaLab</h2>
+                <p class="section-subtitle">
+                    Сравните хаотичную работу отдела продаж с системным контролем на основе ИИ
+                </p>
+            </div>
+
+            <div class="comparison-grid">
+                <div class="comparison-column comparison-bad animate-up">
+                    <h3><i class="fas fa-times-circle" style="color: #ef4444;"></i> Обычный отдел продаж</h3>
+                    <ul class="comparison-list bad">
+                        <li><i class="fas fa-times"></i> Заявки теряются в разных мессенджерах</li>
+                        <li><i class="fas fa-times"></i> Нет контроля времени обработки</li>
+                        <li><i class="fas fa-times"></i> Менеджеры делают "красивые отчеты"</li>
+                        <li><i class="fas fa-times"></i> Собственник не видит реальную картину</li>
+                        <li><i class="fas fa-times"></i> Невозможно отследить потери</li>
+                    </ul>
+                </div>
+
+                <div class="comparison-column comparison-good animate-up delay-1">
+                    <h3><i class="fas fa-check-circle" style="color: var(--primary);"></i> Отдел продаж с TalkaLab</h3>
+                    <ul class="comparison-list good">
+                        <li><i class="fas fa-check"></i> AI-агент общается с клиентами 24/7</li>
+                        <li><i class="fas fa-check"></i> AI-Антихаос показывает реальную картину</li>
+                        <li><i class="fas fa-check"></i> Видны все потери и узкие места</li>
+                        <li><i class="fas fa-check"></i> Управленческие решения вместо отчетов</li>
+                        <li><i class="fas fa-check"></i> +40% к продажам за 1-2 месяца</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="text-center animate-up delay-2" style="margin-top: 60px;">
+                <p style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); max-width: 800px; margin: 0 auto;">
+                    Переход от хаоса к системе — это путь к контролю над отделом продаж и росту выручки.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 3: Чем мы занимаемся -->
+    <section id="services" class="services">
+        <div class="gradient-transition gradient-down"></div>
+        <div class="container">
+            <div class="animate-up">
+                <h2 class="section-title">Наши решения для вашего бизнеса</h2>
+                <p class="section-subtitle">
+                    Мы автоматизируем две ключевые вещи в отделе продаж: общение с клиентами и контроль эффективности
+                </p>
+            </div>
+
+            <div class="service-content">
+                <div class="service-card animate-up">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>1. AI-агент (цифровой продавец)</h3>
+                    <p>Цифровой продавец, который принимает все входящие лиды и ведёт диалог как человек 24/7.</p>
+                    <ul class="service-features">
+                        <li>Принимает заявки с сайта, почты, WhatsApp, Telegram</li>
+                        <li>Отвечает моментально, ведёт диалог как человек</li>
+                        <li>Квалифицирует и передаёт менеджеру готовых клиентов</li>
+                        <li>Цель: не терять деньги на входе и частично заменить людей</li>
+                    </ul>
+                </div>
+
+                <div class="service-card animate-up delay-1">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-bar"></i> <!-- ИКОНКА ДЛЯ AI-Антихаоса -->
+                    </div>
+                    <h3>2. AI-Антихаос (контроль продаж)</h3>
+                    <p>Система контроля, которая показывает собственнику реальную картину продаж.</p>
+                    <ul class="service-features">
+                        <li>Показывает, где теряются деньги и кто не работает</li>
+                        <li>Объясняет, почему падает конверсия</li>
+                        <li>Даёт управленческие решения и рекомендации</li>
+                        <li>Показывает реальную картину вместо отчётов CRM</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-note animate-up delay-2">
+                <h4><i class="fas fa-lightbulb"></i> Максимальный эффект</h4>
+                <p style="color: #666; margin-bottom: 0;">Можно брать решения по отдельности, но максимальный эффект достигается, когда работают оба решения вместе.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- НОВЫЙ БЛОК: ЦЕНЫ - С ПРАВИЛЬНЫМИ ЦЕНАМИ И ВЫРОВНЕННЫМИ КНОПКАМИ -->
+    <section id="pricing" class="pricing">
+        <div class="gradient-transition gradient-up"></div>
+        <div class="container">
+            <div class="animate-up">
+                <h2 class="section-title">Стоимость наших решений</h2>
+                <p class="section-subtitle">
+                    Начните с пилотного проекта на 5-7 дней, чтобы увидеть реальный результат и цифры
+                </p>
+            </div>
+
+            <div class="pricing-grid">
+                <!-- AI-Антихаос - ПЕРВЫЙ -->
+                <div class="pricing-card animate-up">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-chart-bar"></i> <!-- ИКОНКА ДЛЯ AI-Антихаоса -->
+                        </div>
+                        <h3 class="pricing-title">AI-Антихаос</h3>
+                        <p>Контроль продаж для собственника</p>
+                        <div class="pricing-price-container">
+                            <div class="pricing-price">150 000 ₽</div>
+                            <div class="pricing-price-subtitle">за пилот 5-7 дней</div>
+                        </div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Показывает собственнику реальную картину продаж</li>
+                        <li><i class="fas fa-check"></i> Выявляет, где теряются деньги и кто не работает</li>
+                        <li><i class="fas fa-check"></i> Объясняет, почему падает конверсия</li>
+                        <li><i class="fas fa-check"></i> Даёт управленческие решения + рекомендации</li>
+                        <li><i class="fas fa-check"></i> Работает с любыми CRM и системами</li>
+                    </ul>
+                    
+                    <div class="pricing-note">
+                        <strong>Пилот (5-7 дней):</strong> 150 000 ₽ — чтобы увидеть реальную картину вместо догадок
+                    </div>
+                    
+                    <div class="pricing-button-container">
+                        <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+                            <i class="fas fa-play-circle btn-icon"></i> Запустить пилот
+                        </a>
+                    </div>
+                </div>
+
+                <!-- AI-агент - ВТОРОЙ, с отметкой "Рекомендуем" -->
+                <div class="pricing-card animate-up delay-1 featured">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h3 class="pricing-title">AI-агент</h3>
+                        <p>Цифровой продавец 24/7</p>
+                        <div class="pricing-price-container">
+                            <div class="pricing-price">200 000 ₽</div>
+                            <div class="pricing-price-subtitle">за пилот 5-7 дней</div>
+                        </div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Принимает все входящие лиды (сайт, почта, WhatsApp, Telegram)</li>
+                        <li><i class="fas fa-check"></i> Отвечает 24/7, ведёт диалог как человек</li>
+                        <li><i class="fas fa-check"></i> Квалифицирует и передаёт менеджеру только готовых клиентов</li>
+                        <li><i class="fas fa-check"></i> Не теряет деньги на входе</li>
+                        <li><i class="fas fa-check"></i> Частично заменяет людей в продажах</li>
+                    </ul>
+                    
+                    <div class="pricing-note">
+                        <strong>Пилот (5-7 дней):</strong> 200 000 ₽ — чтобы показать реальные потери и результат
+                    </div>
+                    
+                    <div class="pricing-button-container">
+                        <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+                            <i class="fas fa-play-circle btn-icon"></i> Запустить пилот
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center animate-up delay-2" style="margin-top: 60px;">
+                <p style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); max-width: 800px; margin: 0 auto 20px;">
+                    Не знаете, какое решение выбрать? Мы зададим 5 вопросов и покажем, что решит вашу проблему.
+                </p>
+                <a href="#" class="btn btn-outline btn-lg" onclick="openConsultationForm()">
+                    <i class="fas fa-question-circle btn-icon"></i> Помогите выбрать решение
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 4: Для кого -->
+    <section id="audience" class="audience">
+        <div class="gradient-transition gradient-up"></div>
+        <div class="container">
+            <div class="animate-up">
+                <h2 class="section-title">Кому подходят наши решения</h2>
+                <p class="section-subtitle">
+                    Наш подход эффективен для бизнесов, где важен контроль над отделом продаж и прозрачность процессов
+                </p>
+            </div>
+
+            <div class="audience-grid">
+                <div class="audience-card animate-up">
+                    <div class="audience-icon">
+                        <i class="fas fa-user-tie"></i>
+                    </div>
+                    <h3>Собственники бизнеса</h3>
+                    <p>Кто хочет видеть реальную картину в отделе продаж, а не "красивые отчеты".</p>
+                </div>
+
+                <div class="audience-card animate-up delay-1">
+                    <div class="audience-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Руководители отделов продаж</h3>
+                    <p>Кому нужен инструмент контроля и анализа эффективности команды.</p>
+                </div>
+
+                <div class="audience-card animate-up delay-2">
+                    <div class="audience-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <h3>Сервисный бизнес</h3>
+                    <p>Где много входящих заявок и важна скорость обработки.</p>
+                </div>
+
+                <div class="audience-card animate-up delay-3">
+                    <div class="audience-icon">
+                        <i class="fas fa-industry"></i>
+                    </div>
+                    <h3>B2B компании</h3>
+                    <p>Где сложные воронки продаж и нужен контроль на каждом этапе.</p>
+                </div>
+
+                <div class="audience-card animate-up">
+                    <div class="audience-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Недвижимость и строительство</h3>
+                    <p>Где много дорогих лидов и важен каждый клиент.</p>
+                </div>
+
+                <div class="audience-card animate-up delay-1">
+                    <div class="audience-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>Агентства и консалтинг</h3>
+                    <p>Где продажи зависят от качества обработки заявок.</p>
+                </div>
+            </div>
+
+            <div class="text-center animate-up delay-2" style="margin-top: 60px;">
+                <p style="font-size: 1.25rem; font-weight: 600; color: var(--text-primary); max-width: 800px; margin: 0 auto;">
+                    Если у вас есть отдел продаж и вы хотите контролировать процессы — наши решения помогут навести порядок.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 5: КЕЙСЫ -->
+    <section id="cases" class="cases">
+        <div class="gradient-transition gradient-down"></div>
+        <div class="container">
+            <div class="animate-up">
+                <h2 class="section-title">Результаты наших клиентов</h2>
+                <p class="section-subtitle">
+                    Посмотрите, как внедрение контроля помогло компаниям увеличить эффективность
+                </p>
+            </div>
+
+            <div class="cases-grid">
+                <div class="case-card animate-up">
+                    <div class="service-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Агентство недвижимости</h3>
+                    <p>AI-агент показал, что 40% заявок терялись в первый час. После автоматизации обработки — потери снизились до 3%, а конверсия выросла на 45%.</p>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-value">-37%</div>
+                            <div class="case-stat-label">Потери лидов</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-value">+45%</div>
+                            <div class="case-stat-label">Конверсия</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-card animate-up delay-1">
+                    <div class="service-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Медицинская клиника</h3>
+                    <p>AI-Антихаос выявил, что менеджеры тратили 70% времени на "бумажную работу". После оптимизации — время продаж увеличилось на 60%, выручка на 35%.</p>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-value">+60%</div>
+                            <div class="case-stat-label">Время на продажи</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-value">+35%</div>
+                            <div class="case-stat-label">Выручка</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="case-card animate-up delay-2">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Образовательный проект</h3>
+                    <p>Внедрение обоих решений показало разницу в эффективности менеджеров в 4 раза. После оптимизации — общие продажи выросли на 75% за 2 месяца.</p>
+                    <div class="case-stats">
+                        <div class="case-stat">
+                            <div class="case-stat-value">+75%</div>
+                            <div class="case-stat-label">Продажи</div>
+                        </div>
+                        <div class="case-stat">
+                            <div class="case-stat-value">4x</div>
+                            <div class="case-stat-label">Эффективность</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center animate-up delay-3" style="margin-top: 60px;">
+                <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+                    <i class="fas fa-chart-line btn-icon"></i> Рассчитать вашу выгоду
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 6: FAQ -->
+    <section id="faq" class="faq">
+        <div class="gradient-transition gradient-up"></div>
+        <div class="container">
+            <div class="faq-container">
+                <h2 class="section-title animate-up">Часто задаваемые вопросы</h2>
+                <p class="section-subtitle animate-up delay-1">
+                    Отвечаем на самые популярные вопросы о наших решениях
+                </p>
+
+                <div class="faq-list">
+                    <!-- Вопрос 1 -->
+                    <div class="faq-item animate-up delay-1">
+                        <div class="faq-question" onclick="toggleFAQ(1)">
+                            <span>Что такое Talka Lab?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-1">
+                            <p>ИИ для бизнеса, который помогает не терять лиды и контролировать продажи, чтобы вы зарабатывали больше и понимали, куда уходят деньги.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 2 -->
+                    <div class="faq-item animate-up delay-2">
+                        <div class="faq-question" onclick="toggleFAQ(2)">
+                            <span>Чем отличаются AI-агент и AI-Антихаос?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-2">
+                            <ul>
+                                <li><strong>AI-агент</strong> — продаёт вместо менеджеров, ведёт диалог, квалифицирует и передаёт готовых клиентов.</li>
+                                <li><strong>AI-Антихаос</strong> — показывает реальную картину продаж, выявляет потери и даёт рекомендации.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 3 -->
+                    <div class="faq-item animate-up delay-3">
+                        <div class="faq-question" onclick="toggleFAQ(3)">
+                            <span>Нужно ли брать оба продукта сразу?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-3">
+                            <p>Можно по отдельности, но максимальный эффект достигается, когда работают оба решения.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 4 -->
+                    <div class="faq-item animate-up delay-4">
+                        <div class="faq-question" onclick="toggleFAQ(4)">
+                            <span>Что такое пилот и зачем он нужен?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-4">
+                            <p>Пилот — 5–7 дней работы системы, чтобы показать реальные потери и результат. Клиент видит цифры, а не догадки и понимает, какой продукт или связка даст рост.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 5 -->
+                    <div class="faq-item animate-up delay-1">
+                        <div class="faq-question" onclick="toggleFAQ(5)">
+                            <span>Сколько стоит пилот?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-5">
+                            <ul>
+                                <li><strong>AI-агент:</strong> 200 000 ₽ за 5-7 дней</li>
+                                <li><strong>AI-Антихаос:</strong> 150 000 ₽ за 5-7 дней</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 6 -->
+                    <div class="faq-item animate-up delay-2">
+                        <div class="faq-question" onclick="toggleFAQ(6)">
+                            <span>Что входит в автоматизацию и подписку?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-6">
+                            <ul>
+                                <li><strong>Автоматизация</strong> — полная система для бизнеса, которая работает вместо людей или управляет ими.</li>
+                                <li><strong>Подписка</strong> — ежемесячное управление результатом: обновления логики, рост конверсии, контроль потерь, отчёты для собственника.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 7 -->
+                    <div class="faq-item animate-up delay-3">
+                        <div class="faq-question" onclick="toggleFAQ(7)">
+                            <span>Как понять, что мне нужно: AI-агент, Антихаос или оба?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-7">
+                            <p>Мы задаём несколько простых вопросов о ваших продажах. По ответам видно, что решает проблему.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 8 -->
+                    <div class="faq-item animate-up delay-4">
+                        <div class="faq-question" onclick="toggleFAQ(8)">
+                            <span>Насколько сложно внедрить систему?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-8">
+                            <p>Мы делаем пошаговую настройку и интеграцию. Пилот — минимальный этап, чтобы увидеть результат, после чего масштабируем.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 9 -->
+                    <div class="faq-item animate-up delay-1">
+                        <div class="faq-question" onclick="toggleFAQ(9)">
+                            <span>Сколько времени занимает настройка полной системы?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-9">
+                            <p>От 1 до 4 недель, в зависимости от масштаба бизнеса, каналов и интеграций.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 10 -->
+                    <div class="faq-item animate-up delay-2">
+                        <div class="faq-question" onclick="toggleFAQ(10)">
+                            <span>Можно ли протестировать результат перед покупкой?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-10">
+                            <p>Да, именно для этого есть пилот — он показывает эффект и цифры, прежде чем вы вкладываетесь в автоматизацию.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 11 -->
+                    <div class="faq-item animate-up delay-3">
+                        <div class="faq-question" onclick="toggleFAQ(11)">
+                            <span>Нужно ли быть техническим специалистом для работы с Talka Lab?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-11">
+                            <p>Нет. Система работает сама, а вы получаете управленческий контроль и отчёты.</p>
+                        </div>
+                    </div>
+
+                    <!-- Вопрос 12 -->
+                    <div class="faq-item animate-up delay-4">
+                        <div class="faq-question" onclick="toggleFAQ(12)">
+                            <span>Что делает подписка каждый месяц?</span>
+                            <i class="fas fa-plus faq-icon"></i>
+                        </div>
+                        <div class="faq-answer" id="faq-answer-12">
+                            <ul>
+                                <li>Обновляет офферы и логику</li>
+                                <li>Улучшает конверсию лидов</li>
+                                <li>Показывает реальные потери</li>
+                                <li>Даёт управленческие рекомендации</li>
+                            </ul>
+                            <p><strong>Подписка — это не поддержка ИИ, а ответственность за результат продаж.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок 7: CTA С КОНСУЛЬТАЦИЕЙ -->
+    <section id="contact" class="cta">
+        <div class="gradient-transition gradient-dark-up"></div>
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="animate-up">Готовы навести порядок в продажах?</h2>
+                <p class="animate-up delay-1">
+                    Заполните короткую форму — мы зададим 5 вопросов, проанализируем ваш отдел продаж и покажем,
+                    какое решение даст максимальный рост.
+                </p>
+
+                <div class="consultation-widget animate-scale delay-2">
+                    <div class="consultation-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="consultation-title">Получить консультацию</div>
+                    <p class="consultation-desc">Оставьте свои контактные данные, и наш специалист свяжется с вами в течение 30 минут для бесплатной консультации</p>
+                    <a href="#" class="btn btn-primary btn-lg" onclick="openConsultationForm()">
+                        <i class="fas fa-comments btn-icon"></i> Оставить заявку
+                    </a>
+                </div>
+
+                <div class="hero-stats animate-up delay-3">
+                    <div class="stat">
+                        <div class="stat-number">0 ₽</div>
+                        <div class="stat-label">За консультацию</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">5 вопр.</div>
+                        <div class="stat-label">Для анализа</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">30 мин</div>
+                        <div class="stat-label">На ответ</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПОДВАЛ САЙТА -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <div class="logo-icon"></div>
+                        <div class="logo-text">TalkaLab</div>
+                    </div>
+                    <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem; line-height: 1.6;">
+                        ИИ для бизнеса: AI-агент общается с клиентами 24/7, AI-Антихаос показывает реальную картину продаж. Помогаем не терять лиды и контролировать эффективность.
+                    </p>
+                    <div class="social-links">
+                        <a href="https://t.me/talka_lab" class="social-link" target="_blank" title="Telegram канал">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://t.me/talka_lab_support_bot" class="social-link" target="_blank" title="Техподдержка">
+                            <i class="fas fa-headset"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Навигация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#comparison">Сравнение</a></li>
+                        <li><a href="#services">Решения</a></li>
+                        <li><a href="#pricing">Цены</a></li>
+                        <li><a href="#audience">Для кого</a></li>
+                        <li><a href="#cases">Кейсы</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Решения</h3>
+                    <ul class="footer-links">
+                        <li><a href="#services">AI-агент (цифровой продавец)</a></li>
+                        <li><a href="#services">AI-Антихаос (контроль продаж)</a></li>
+                        <li><a href="#pricing">Пилотный проект</a></li>
+                        <li><a href="#pricing">Автоматизация и подписка</a></li>
+                        <li><a href="#faq">Ответы на вопросы</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><a href="https://t.me/talka_lab" target="_blank">Наш канал: @talka_lab</a></li>
+                        <li><a href="https://t.me/talka_lab_support_bot" target="_blank">Техподдержка</a></li>
+                        <li><a href="#" onclick="openConsultationForm()">Получить консультацию</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2026 TalkaLab. Все права защищены.</p>
+                <div class="copyright-links">
+                    <a href="#" onclick="openPrivacyPolicy()">Политика конфиденциальности</a>
+                    <a href="#" onclick="openTerms()">Пользовательское соглашение</a>
+                    <a href="#" onclick="openConsultationForm()">Обратная связь</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО ФОРМЫ КОНСУЛЬТАЦИИ -->
+    <div id="consultationModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="brief-header">
+                <button class="close-modal" onclick="closeConsultationForm()">×</button>
+                <h3>Получить консультацию</h3>
+                <p>Заполните форму ниже, и наш специалист свяжется с вами для бесплатной консультации</p>
+            </div>
+            <div class="brief-body">
+                <form id="consultationForm" class="brief-form">
+                    <div class="form-group">
+                        <label for="clientName">Ваше имя</label>
+                        <input type="text" id="clientName" name="name" required placeholder="Введите ваше имя">
+                    </div>
+                    <div class="form-group">
+                        <label for="clientTelegram">
+                            Ваш Telegram username 
+                            <button type="button" class="help-btn" onclick="openInstruction()">
+                                <i class="fas fa-question-circle"></i> Как найти?
+                            </button>
+                        </label>
+                        <input type="text" id="clientTelegram" name="telegram" required placeholder="@username (например: @ivanov)">
+                    </div>
+                    <button type="submit" class="submit-btn">Отправить заявку на консультацию</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО ИНСТРУКЦИИ -->
+    <div id="instructionModal" class="instruction-modal">
+        <div class="instruction-content">
+            <div class="instruction-header">
+                <button class="close-instruction" onclick="closeInstruction()">×</button>
+                <h3>Как найти Telegram username?</h3>
+                <p>Простая инструкция для поиска вашего username в Telegram</p>
+            </div>
+            <div class="instruction-body">
+                <div class="instruction-steps">
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Откройте Telegram</h4>
+                            <p>Запустите приложение Telegram на вашем телефоне.</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Перейдите в настройки</h4>
+                            <p>Нажмите на значок меню (три полоски) в левом верхнем углу, затем выберите "Настройки".</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Найдите свой username</h4>
+                            <p>В настройках нажмите на свой профиль вверху. Здесь вы увидите поле "Username".</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>Скопируйте username</h4>
+                            <p>Если у вас есть username (начинается с @), скопируйте его. Если нет — создайте новый.</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <h4>Как создать username?</h4>
+                            <p>Если у вас нет username, нажмите "Установить username". Придумайте и введите его (например: @ivanov).</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                    <h4 style="color: #333; margin-bottom: 10px;"><i class="fas fa-lightbulb"></i> Важно знать</h4>
+                    <p style="color: #666; margin-bottom: 5px; font-size: 0.9rem;">• Username всегда начинается с символа @</p>
+                    <p style="color: #666; margin-bottom: 5px; font-size: 0.9rem;">• Он может содержать латинские буквы, цифры и нижние подчеркивания</p>
+                    <p style="color: #666; margin-bottom: 0; font-size: 0.9rem;">• Примеры правильных username: @ivanov, @maria_2023, @company_name</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно политики конфиденциальности -->
+    <div id="privacyModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="brief-header">
+                <button class="close-modal" onclick="closePrivacyPolicy()">×</button>
+                <h3>Политика конфиденциальности</h3>
+            </div>
+            <div class="brief-body">
+                <div style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                    <h4>1. Общие положения</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Настоящая политика конфиденциальности регулирует порядок обработки и защиты информации о физических лицах, пользующихся услугами сайта TalkaLab.
+                    </p>
+                    
+                    <h4>2. Сбор информации</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Мы собираем только ту информацию, которую вы предоставляете нам добровольно при заполнении форм на сайте: имя и Telegram username.
+                    </p>
+                    
+                    <h4>3. Использование информации</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Предоставленная информация используется исключительно для связи с вами и предоставления консультационных услуг.
+                    </p>
+                    
+                    <h4>4. Защита информации</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Мы принимаем необходимые меры для защиты вашей персональной информации от несанкционированного доступа.
+                    </p>
+                    
+                    <h4>5. Контакты</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+                        По вопросам защиты персональных данных обращайтесь в Telegram: @talka_lab
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно пользовательского соглашения -->
+    <div id="termsModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="brief-header">
+                <button class="close-modal" onclick="closeTerms()">×</button>
+                <h3>Пользовательское соглашение</h3>
+            </div>
+            <div class="brief-body">
+                <div style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                    <h4>1. Общие положения</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Настоящее Соглашение регулирует отношения между TalkaLab и Пользователем по использованию сайта и услуг.
+                    </p>
+                    
+                    <h4>2. Условия использования</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        Используя сайт TalkaLab, вы подтверждаете, что ознакомились с условиями настоящего Соглашения и принимаете их.
+                    </p>
+                    
+                    <h4>3. Услуги</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        TalkaLab предоставляет услуги по консультации и внедрению систем автоматизации контроля отдела продаж.
+                    </p>
+                    
+                    <h4>4. Ответственность</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 15px;">
+                        TalkaLab не несет ответственности за любые косвенные убытки, возникшие в результате использования или невозможности использования услуг.
+                    </p>
+                    
+                    <h4>5. Контакты</h4>
+                    <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 0;">
+                        По всем вопросам обращайтесь: Telegram @talka_lab
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Подключаем JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
